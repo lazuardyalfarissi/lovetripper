@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Our Love Story</title>
+   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+   <style>
+       :root {
+           --primary-color: #FF8FA3;
+           --secondary-color: #FFB3C1;
+           --accent-color: #FF4D6D;
+           --background-color: #FFF0F3;
+           --text-color: #832161;
+           --card-bg: rgba(255, 255, 255, 0.9);
+       }
+
+       * {
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+       }
+
+       body {
+           font-family: 'Poppins', sans-serif;
+           background-color: var(--background-color);
+           color: var(--text-color);
+           min-height: 100vh;
+           overflow-x: hidden;
+       }
+
+       /* Animation Hearts Background */
+       .floating-hearts {
+           position: fixed;
+           width: 100vw;
+           height: 100vh;
+           z-index: -1;
+           pointer-events: none;
+       }
+
+       .heart {
+           position: absolute;
+           font-size: 1.5rem;
+           color: var(--primary-color);
+           opacity: 0.6;
+           animation: float-up 15s linear infinite;
+       }
+
+       @keyframes float-up {
+           0% {
+               transform: translateY(100vh) rotate(0deg);
+               opacity: 0.6;
+           }
+           100% {
+               transform: translateY(-100vh) rotate(360deg);
+               opacity: 0;
+           }
+       }
+
+       /* Banner Section with Slideshow */
+       .banner-container {
+           width: 100%;
+           max-width: 1400px;
+           margin: 0 auto;
+           padding: 20px;
+           background-color: var(--background-color);
+       }
+
+       .banner {
+           width: 100%;
+           border-radius: 20px;
+           overflow: hidden;
+           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+           background-color: white;
+           margin-bottom: 2em;
+       }
+
+       .slideshow {
+           position: relative;
+           width: 100%;
+           height: 1400px;
+           overflow: hidden;
+       }
+
+       .slide {
+           position: absolute;
+           width: 100%;
+           height: 100%;
+           opacity: 0;
+           transition: opacity 1s ease-in-out;
+       }
+
+       .slide img {
+           width: 100%;
+           height: 100%;
+           object-fit: cover;
+       }
+
+       .fade {
+           animation-name: fade;
+           animation-duration: 1.5s;
+       }
+
+       @keyframes fade {
+           from {opacity: 0.4} 
+           to {opacity: 1}
+       }
+
+       /* Header Section */
+       header {
+           padding: 2em 1em;
+           text-align: center;
+           position: relative;
+       }
+
+       header h1 {
+           font-family: 'Dancing Script', cursive;
+           font-size: 4em;
+           color: var(--accent-color);
+           margin-bottom: 0.2em;
+           text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+       }
+
+       header h2 {
+           font-weight: 300;
+           color: var(--text-color);
+       }
+
+       /* Profile Cards Section */
+       .profile {
+           display: grid;
+           grid-template-columns: repeat(2, 1fr);
+           gap: 3em;
+           padding: 1em 3em 3em;
+           max-width: 1200px;
+           margin: 0 auto;
+       }
+
+       .card {
+           background: var(--card-bg);
+           border-radius: 30px;
+           padding: 2em;
+           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+           transition: all 0.3s ease;
+           position: relative;
+       }
+
+       .card::before {
+           content: '❤';
+           position: absolute;
+           top: 1rem;
+           right: 1rem;
+           font-size: 1.5em;
+           color: var(--accent-color);
+           opacity: 0.5;
+       }
+
+       .card:hover {
+           transform: translateY(-10px);
+           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+       }
+
+       .card-image-container {
+           width: 200px;
+           height: 200px;
+           margin: 0 auto 1.5em;
+           border-radius: 50%;
+           overflow: hidden;
+           border: 5px solid var(--primary-color);
+           transition: 0.3s;
+       }
+
+       .card img {
+           width: 100%;
+           height: 100%;
+           object-fit: cover;
+           transition: 0.3s;
+       }
+
+       .card:hover .card-image-container {
+           border-color: var(--accent-color);
+       }
+
+       .card:hover img {
+           transform: scale(1.1);
+       }
+
+       .card h3 {
+           font-family: 'Dancing Script', cursive;
+           font-size: 2.2em;
+           margin-bottom: 0.5em;
+           color: var(--accent-color);
+           text-align: center;
+       }
+
+       .card p {
+           color: var(--text-color);
+           margin-bottom: 1em;
+           font-size: 1.1em;
+           text-align: center;
+           line-height: 1.6;
+       }
+
+       .card p strong {
+           color: var(--accent-color);
+       }
+
+       /* Footer Section */
+       footer {
+           text-align: center;
+           padding: 2em;
+           color: var(--text-color);
+           background-color: var(--card-bg);
+           margin-top: 2em;
+       }
+
+       footer::before, footer::after {
+           content: '❤';
+           color: var(--accent-color);
+           margin: 0 0.5em;
+           font-size: 1.2em;
+       }
+
+       /* Responsive Design */
+       @media (max-width: 768px) {
+        .slideshow {
+        height: 300px; /* Ukuran khusus untuk mobile */
+    }
+           .banner-container {
+               padding: 10px;
+           }
+           
+           header h1 {
+               font-size: 3em;
+           }
+
+           .profile {
+               grid-template-columns: 1fr;
+               padding: 1.5em;
+               gap: 2em;
+           }
+
+           .card {
+               margin: 0 0.5em;
+           }
+       }
+   </style>
+</head>
+
+<body>
+   <div class="floating-hearts">
+       <script>
+           for(let i = 0; i < 20; i++) {
+               const heart = document.createElement('div');
+               heart.className = 'heart';
+               heart.innerHTML = '❤';
+               heart.style.left = Math.random() * 100 + 'vw';
+               heart.style.animationDelay = Math.random() * 15 + 's';
+               document.querySelector('.floating-hearts').appendChild(heart);
+           }
+       </script>
+   </div>
+
+   <div class="banner-container">
+       <div class="banner">
+           <div class="slideshow">
+               <div class="slide fade">
+                   <img src="fotobox1.jpg" alt="Couple Photo 1">
+               </div>
+               <div class="slide fade">
+                   <img src="fotobox.jpg" alt="Couple Photo 2">
+               </div>
+               <div class="slide fade">
+                   <img src="fotobox2.jpg" alt="Couple Photo 3">
+               </div>
+               <!-- Tambahkan foto lainnya dengan format yang sama -->
+           </div>
+       </div>
+   </div>
+
+   <header>
+       <h1>Our Love Story</h1>
+       <h2>Together Since [21 Desember 2024] ❤</h2>
+   </header>
+
+   <main>
+       <section class="profile">
+           <div class="card">
+               <div class="card-image-container">
+                   <img src="lazuardy.jpg" alt="Foto Anda">
+               </div>
+               <h3>Lazuardy Al Farissi</h3>
+               <p><strong>TTL:</strong> Jakarta, 13 Juli 2003</p>
+               <p><strong>Hobi:</strong> ngebitbok wkwkw</p>
+               <p><strong>Motto:</strong> sayang sama mutiara azzahraaaaaaa sampe kapanpun anjay mabar</p>
+           </div>
+           <div class="card">
+               <div class="card-image-container">
+                   <img src="mutiara2.jpg" alt="Foto Pasangan">
+               </div>
+               <h3>Mutiara Azzahra</h3>
+               <p><strong>TTL:</strong> [Jakarta, 11 Februari 2004]</p>
+               <p><strong>Hobi:</strong> Nonton Konser</p>
+               <p><strong>Motto:</strong> ngga tau belum nanya wkwkww</p>
+           </div>
+       </section>
+   </main>
+
+   <footer>
+       <p>Forever & Always</p>
+   </footer>
+
+   <script>
+       let slideIndex = 0;
+       showSlides();
+
+       function showSlides() {
+           let slides = document.getElementsByClassName("slide");
+           
+           for (let i = 0; i < slides.length; i++) {
+               slides[i].style.opacity = "0";
+           }
+           
+           slideIndex++;
+           if (slideIndex > slides.length) {slideIndex = 1}
+           
+           slides[slideIndex-1].style.opacity = "1";
+           setTimeout(showSlides, 3000); // Ganti slide setiap 3 detik
+       }
+   </script>
+</body>
+
+</html>
