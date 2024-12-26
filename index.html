@@ -270,14 +270,41 @@
     </style>
 </head>
 <body>
-    <!-- Music Player -->
-    <div class="music-player">
-        <button id="playPause"><i class="fas fa-play"></i></button>
-        <span>Our Song</span>
-        <audio id="bgMusic" loop>
-            <source src="your-song.mp3" type="audio/mpeg">
-        </audio>
-    </div>
+   // Music Player
+const audio = document.getElementById('bgMusic');
+const playPauseBtn = document.getElementById('playPause');
+const playPauseIcon = playPauseBtn.querySelector('i');
+
+// Memastikan audio siap dimuat
+audio.load();
+
+playPauseBtn.addEventListener('click', () => {
+    // Promise untuk memulai pemutaran
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+        playPromise
+            .then(() => {
+                // Autoplay diizinkan
+                if (audio.paused) {
+                    audio.play();
+                    playPauseIcon.classList.replace('fa-play', 'fa-pause');
+                } else {
+                    audio.pause();
+                    playPauseIcon.classList.replace('fa-pause', 'fa-play');
+                }
+            })
+            .catch(error => {
+                // Autoplay tidak diizinkan
+                console.log("Playback failed:", error);
+            });
+    }
+});
+
+// Tambahkan event listener untuk memastikan audio siap
+audio.addEventListener('canplaythrough', () => {
+    playPauseBtn.disabled = false;
+});
 
     <!-- Hero Section -->
     <section class="hero">
