@@ -8,13 +8,13 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
    <style>
        :root {
-           --primary-color: #2E3B80;
-           --secondary-color: #5C6BC0;
-           --accent-color: #7986CB;
-           --background-color: #F5F5F5;
+           --primary-color: #FF6F91;
+           --secondary-color: #FF9A8B;
+           --accent-color: #FF677D;
+           --background-color: #F8E9F3;
            --text-color: #333333;
-           --card-bg: rgba(255, 255, 255, 0.95);
-           --gradient: linear-gradient(135deg, #2E3B80, #7986CB);
+           --card-bg: rgba(255, 255, 255, 0.9);
+           --gradient: linear-gradient(135deg, #FF6F91, #FF9A8B);
        }
 
        * {
@@ -31,7 +31,6 @@
            overflow-x: hidden;
        }
 
-       /* Music Player */
        .music-player {
            position: fixed;
            bottom: 20px;
@@ -44,7 +43,12 @@
            gap: 10px;
            color: white;
            z-index: 1000;
-           box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+           transition: transform 0.2s;
+       }
+
+       .music-player:hover {
+           transform: scale(1.05);
        }
 
        .music-player button {
@@ -55,7 +59,6 @@
            font-size: 1.2em;
        }
 
-       /* Hero Section */
        .hero {
            height: 100vh;
            position: relative;
@@ -74,28 +77,38 @@
            width: 100%;
            height: 100%;
            z-index: -1;
+           display: flex;
+           transition: opacity 1s ease-in-out;
        }
 
        .hero-bg img {
            width: 100%;
            height: 100%;
            object-fit: cover;
-           filter: brightness(0.7);
+           filter: brightness(0.5);
+           position: absolute;
+           top: 0;
+           left: 0;
+           opacity: 0;
+           transition: opacity 1s;
+       }
+
+       .hero-bg img.active {
+           opacity: 1;
        }
 
        .hero-content h1 {
            font-family: 'Abril Fatface', cursive;
            font-size: 5em;
            margin-bottom: 20px;
-           text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+           text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
        }
 
        .hero-content p {
            font-size: 1.5em;
-           text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+           text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
        }
 
-       /* Days Counter */
        .days-counter {
            background: white;
            padding: 40px 20px;
@@ -103,6 +116,7 @@
            border-radius: 30px 30px 0 0;
            margin-top: -30px;
            position: relative;
+           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
        }
 
        .counter {
@@ -114,10 +128,9 @@
            margin-bottom: 10px;
        }
 
-       /* Profile Section */
        .profile-section {
            padding: 60px 20px;
-           background: white;
+           background: var(--background-color);
        }
 
        .profile-container {
@@ -129,12 +142,12 @@
        }
 
        .profile-card {
-           background: rgba(255,255,255,0.9);
+           background: var(--card-bg);
            backdrop-filter: blur(10px);
            border-radius: 20px;
            padding: 30px;
            text-align: center;
-           box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
            transition: transform 0.3s;
        }
 
@@ -173,7 +186,6 @@
            margin-bottom: 10px;
        }
 
-       /* Gallery */
        .gallery {
            padding: 60px 20px;
            background: var(--background-color);
@@ -192,6 +204,11 @@
            border-radius: 15px;
            overflow: hidden;
            aspect-ratio: 1;
+           transition: transform 0.3s;
+       }
+
+       .gallery-item:hover {
+           transform: scale(1.05);
        }
 
        .gallery-item img {
@@ -205,50 +222,6 @@
            transform: scale(1.1);
        }
 
-       /* Timeline */
-       .timeline {
-           padding: 60px 20px;
-           background: white;
-       }
-
-       .timeline-container {
-           max-width: 800px;
-           margin: 0 auto;
-           position: relative;
-       }
-
-       .timeline-container::before {
-           content: '';
-           position: absolute;
-           left: 50%;
-           transform: translateX(-50%);
-           width: 2px;
-           height: 100%;
-           background: var(--gradient);
-       }
-
-       .timeline-item {
-           margin-bottom: 40px;
-           position: relative;
-           width: calc(50% - 30px);
-       }
-
-       .timeline-item:nth-child(odd) {
-           left: 0;
-       }
-
-       .timeline-item:nth-child(even) {
-           left: calc(50% + 30px);
-       }
-
-       .timeline-content {
-           background: white;
-           padding: 20px;
-           border-radius: 15px;
-           box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-       }
-
-       /* Responsive Design */
        @media (max-width: 768px) {
            .hero-content h1 {
                font-size: 3em;
@@ -257,32 +230,23 @@
            .profile-container {
                grid-template-columns: 1fr;
            }
-
-           .timeline-container::before {
-               left: 20px;
-           }
-
-           .timeline-item {
-               width: calc(100% - 50px);
-               left: 50px !important;
-           }
        }
    </style>
 </head>
 <body>
-   <!-- Music Player -->
    <div class="music-player">
-       <button id="playPause"><i class="fas fa-play"></i></button>
+       <button id="playPause"><i class="fas fa-pause"></i></button>
        <span>Our Song</span>
-       <audio id="bgMusic" loop>
+       <audio id="bgMusic" loop autoplay>
            <source src="your-song.mp3" type="audio/mpeg">
        </audio>
    </div>
 
-   <!-- Hero Section -->
    <section class="hero">
-       <div class="hero-bg">
-           <img src="fotobox.jpg" alt="Hero Image">
+       <div class="hero-bg" id="heroBg">
+           <img src="fotobox1.jpg" alt="Hero Image 1" class="active">
+           <img src="fotobox.jpg" alt="Hero Image 2">
+           <img src="fotobox2.jpg" alt="Hero Image 3">
        </div>
        <div class="hero-content">
            <h1>Us ✨</h1>
@@ -290,13 +254,11 @@
        </div>
    </section>
 
-   <!-- Days Counter -->
    <section class="days-counter">
        <div class="counter" id="daysCount">0</div>
        <p>days together</p>
    </section>
 
-   <!-- Profile Section -->
    <section class="profile-section">
        <div class="profile-container">
            <div class="profile-card">
@@ -320,7 +282,6 @@
        </div>
    </section>
 
-   <!-- Gallery Section -->
    <section class="gallery">
        <div class="gallery-grid">
            <div class="gallery-item">
@@ -332,27 +293,22 @@
            <div class="gallery-item">
                <img src="fotobox2.jpg" alt="Moment 3">
            </div>
-           <!-- Add more gallery items as needed -->
        </div>
    </section>
 
    <script>
-       // Music Player
        const audio = document.getElementById('bgMusic');
        const playPauseBtn = document.getElementById('playPause');
        const playPauseIcon = playPauseBtn.querySelector('i');
 
-       // Memastikan audio siap dimuat
        audio.load();
 
        playPauseBtn.addEventListener('click', () => {
-           // Promise untuk memulai pemutaran
            const playPromise = audio.play();
 
            if (playPromise !== undefined) {
                playPromise
                    .then(() => {
-                       // Autoplay diizinkan
                        if (audio.paused) {
                            audio.play();
                            playPauseIcon.classList.replace('fa-play', 'fa-pause');
@@ -362,30 +318,37 @@
                        }
                    })
                    .catch(error => {
-                       // Autoplay tidak diizinkan
                        console.log("Playback failed:", error);
                    });
            }
        });
 
-       // Tambahkan event listener untuk memastikan audio siap
        audio.addEventListener('canplaythrough', () => {
            playPauseBtn.disabled = false;
        });
 
-       // Days Counter
        const startDate = new Date('2024-12-21');
        const today = new Date();
        const diffTime = Math.abs(today - startDate);
        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
        document.getElementById('daysCount').textContent = diffDays;
 
-       // Scroll Reveal Animation
+       const images = document.querySelectorAll('.hero-bg img');
+       let currentIndex = 0;
+
+       function changeBackground() {
+           images[currentIndex].classList.remove('active');
+           currentIndex = (currentIndex + 1) % images.length;
+           images[currentIndex].classList.add('active');
+       }
+
+       setInterval(changeBackground, 5000); // Ganti gambar setiap 5 detik
+
        window.addEventListener('scroll', () => {
            const elements = document.querySelectorAll('.profile-card, .gallery-item');
            elements.forEach(element => {
                const position = element.getBoundingClientRect();
-               if(position.top < window.innerHeight - 100) {
+               if (position.top < window.innerHeight - 100) {
                    element.style.opacity = '1';
                    element.style.transform = 'translateY(0)';
                }
